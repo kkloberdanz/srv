@@ -16,6 +16,11 @@
 
 #define UNUSED(A) (void)(A)
 
+union void_ptr_to_int {
+    void *vp;
+    int i;
+};
+
 const char *response = "HTTP/1.1 200 OK\r\n\r\n"
     "<!DOCTYPE html>"
         "<html lang=\"en\">"
@@ -61,8 +66,10 @@ void handle_request(int new_socket) {
 }
 
 void *thread_start(void *arg) {
-    int new_socket = (int)arg;
-    handle_request(new_socket);
+    union void_ptr_to_int vp_to_i;
+
+    vp_to_i.vp = arg;
+    handle_request(vp_to_i.i);
     return NULL;
 }
 
@@ -119,6 +126,7 @@ int main(void) {
     /* infinite loop */
     puts("listening\n");
     for (;;) {
+        struct wrkq_job job;
         if ((
             new_socket = accept(
                 server_fd,
@@ -129,9 +137,11 @@ int main(void) {
             perror("accept");
         }
 
-        struct wrkq_job job;
+        union void_ptr_to_int vp_to_i;
+        vp_to_i.i = new_socket;
+
         job.func = thread_start;
-        job.arg = (void *)new_socket;
+        job.arg = vp_to_i.vp;
         wrkq_nq(q, job);
     }
 }
