@@ -117,8 +117,6 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
-    struct wrkq_job *jobs = malloc(1000 * sizeof(*jobs));
-
     q_opt.n_workers = 16;
     q_opt.queue_depth = 255;
     q = wrkq_new(&q_opt);
