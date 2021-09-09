@@ -21,7 +21,8 @@ union void_ptr_to_int {
     int i;
 };
 
-const char *response = "HTTP/1.1 200 OK\r\n\r\n"
+const char *response = "HTTP/1.1 200 OK\r\n"
+    "Content-Length: 122\r\n\r\n"
     "<!DOCTYPE html>"
         "<html lang=\"en\">"
           "<head>"
@@ -54,11 +55,11 @@ void readall(int fd, char *buf, size_t count) {
 }
 
 void handle_request(int new_socket) {
-    char buf[1024];
+    char buf[1024] = {0};
     const size_t buf_sz = 1024;
     ssize_t bytes_read;
 
-    bytes_read = read(new_socket, buf, buf_sz);
+    bytes_read = read(new_socket, buf, buf_sz - 1);
     UNUSED(bytes_read);
 
     writeall(new_socket, response, sz);
