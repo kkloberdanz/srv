@@ -113,7 +113,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
-    if (listen(server_fd, 3) < 0) {
+    if (listen(server_fd, 1000) < 0) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
