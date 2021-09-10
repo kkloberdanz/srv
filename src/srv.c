@@ -118,8 +118,8 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
-    q_opt.n_workers = 16;
-    q_opt.queue_depth = 255;
+    q_opt.n_workers = 512;
+    q_opt.queue_depth = 100000;
     q = wrkq_new(&q_opt);
 
     /* infinite loop */
