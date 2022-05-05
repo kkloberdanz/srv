@@ -39,10 +39,13 @@ struct wrkq_t *wrkq_new(struct wrkq_options *opt);
 
 void wrkq_destroy(struct wrkq_t *q);
 
+/* enqueue a job */
 size_t wrkq_nq(struct wrkq_t *q, struct wrkq_job job);
 
+/* dequeue a job */
 void wrkq_dq(struct wrkq_t *q, struct wrkq_result *out);
 
+/* join all threads */
 void wrkq_join(struct wrkq_t *q, struct wrkq_result **results);
 
 #endif /* WRKQ_H */

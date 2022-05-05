@@ -21,7 +21,7 @@ union void_ptr_to_int {
     int i;
 };
 
-const char *response = "HTTP/1.1 200 OK\r\n"
+const char * const response = "HTTP/1.1 200 OK\r\n"
     "Content-Length: 122\r\n\r\n"
     "<!DOCTYPE html>"
         "<html lang=\"en\">"
